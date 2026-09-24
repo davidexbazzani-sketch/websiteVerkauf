@@ -1,0 +1,23 @@
+---
+/** Personenkarte: Porträt (4:5), Rolle, Name und ein persönlicher Satz in „…“. */
+import PhotoPlaceholder from './PhotoPlaceholder.astro';
+
+interface Props {
+  name: string;
+  role: string;
+  quote: string;
+  photo?: string;
+  src?: string;
+  tone?: 'peach' | 'lavender' | 'sky' | 'sage';
+  class?: string;
+}
+const { name, role, quote, photo, src, tone = 'peach', class: className } = Astro.props;
+---
+<figure class:list={['lu-person', className]}>
+  <PhotoPlaceholder label={photo ?? `Porträt ${name}`} tone={tone} class="lu-person__photo" src={src} />
+  <figcaption>
+    <span class="lu-eyebrow lu-person__role">{role}</span>
+    <h3 class="lu-person__name">{name}</h3>
+  </figcaption>
+  <blockquote class="lu-person__quote" style="margin: 0">„{quote}“</blockquote>
+</figure>

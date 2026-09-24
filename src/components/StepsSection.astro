@@ -1,0 +1,24 @@
+---
+/** Sektion „So funktioniert’s“ (#so-gehts) mit drei treppenförmig versetzten Schritt-Karten. */
+import { config } from '../config';
+import SectionHeading from './SectionHeading.astro';
+import StepCard from './StepCard.astro';
+
+interface Props { id?: string; title?: string; intro?: string; class?: string }
+const {
+  id = 'so-gehts',
+  title = 'So funktioniert’s',
+  intro = 'Drei Schritte, drei Menschen aus der Nachbarschaft. Sie müssen nichts vorbereiten.',
+  class: className,
+} = Astro.props;
+---
+<section class:list={['lu-section', className]} id={id} aria-labelledby="so-gehts-titel">
+  <div class="lu-container lu-section__inner">
+    <SectionHeading eyebrow="Leistungen" title={title} titleId="so-gehts-titel" intro={intro} />
+    <ol class="lu-steps">
+      {config.steps.map((s, i) => (
+        <li><StepCard number={i + 1} icon={s.icon} title={s.title} text={s.text} tone={s.tone} /></li>
+      ))}
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,15 @@
+---
+/** Kleines Etikett aus ein, zwei Wörtern – Text immer ink auf Pastell. */
+import Icon from './Icon.astro';
+import type { IconName } from '../lib/icons';
+
+interface Props {
+  tone?: 'lavender' | 'peach' | 'sage' | 'sky' | 'paper';
+  icon?: IconName;
+  class?: string;
+}
+const { tone, icon, class: className } = Astro.props;
+---
+<span class:list={['lu-badge', tone && tone !== 'lavender' && `lu-badge--${tone}`, className]}>
+  {icon && <Icon name={icon} size={16} />}<slot />
+</span>

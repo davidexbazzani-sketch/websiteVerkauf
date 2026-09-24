@@ -1,0 +1,37 @@
+---
+/**
+ * Fläche für Jans Fotos. Ohne `src` ein Pastell-Platzhalter mit Kamera-Icon und
+ * Beschriftung; mit `src` ein echtes <img> (später über astro:assets mit srcset).
+ * `label` beschreibt das Motiv und wird zum Alt-Text.
+ */
+import Icon from './Icon.astro';
+
+interface Props {
+  label: string;
+  src?: string;
+  alt?: string;
+  tone?: 'peach' | 'lavender' | 'sky' | 'sage' | 'peach-soft' | 'lavender-soft';
+  shape?: 'arch' | 'xl';
+  ratio?: string;
+  hideLabel?: boolean;
+  /** Hero-Bild: eager + fetchpriority high; sonst lazy */
+  priority?: boolean;
+  class?: string;
+  style?: string;
+}
+const { label, src, alt, tone, shape, ratio, hideLabel = false, priority = false, class: className, style } = Astro.props;
+const cls = ['lu-photo', tone && `lu-photo--${tone}`, shape === 'arch' && 'lu-photo--arch', shape === 'xl' && 'lu-photo--xl', className];
+const styles = [ratio && `aspect-ratio: ${ratio}`, style].filter(Boolean).join('; ') || undefined;
+---
+{src ? (
+  <div class:list={cls} style={styles}>
+    <img src={src} alt={alt ?? label} loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} decoding="async" />
+  </div>
+) : (
+  <div class:list={cls} style={styles} role="img" aria-label={`Foto-Platzhalter: ${label}`}>
+    <div class="lu-photo__ph" aria-hidden="true">
+      <Icon name="kamera" size={28} class="lu-photo__icon" />
+      {!hideLabel && <span class="lu-photo__chip">Foto: {label}</span>}
+    </div>
+  </div>
+)}

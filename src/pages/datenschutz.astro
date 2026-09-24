@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import LegalPage from '../components/LegalPage.astro';
+import { config } from '../config';
+---
+<Base title="Datenschutzerklärung" description={`Datenschutzerklärung von ${config.name} – ohne Cookies, ohne Tracking, Schriften vom eigenen Server.`} ogSlug="datenschutz">
+  <LegalPage kind="datenschutz" />
+</Base>

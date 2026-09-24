@@ -1,0 +1,23 @@
+---
+/** Karte für einen Schritt: Icon im Pastellkreis, große kursive Ziffer, Titel, Text. */
+import Icon from './Icon.astro';
+import type { IconName } from '../lib/icons';
+
+interface Props {
+  number: number;
+  icon: IconName;
+  title: string;
+  text: string;
+  tone?: 'peach' | 'lavender' | 'sage';
+  class?: string;
+}
+const { number, icon, title, text, tone, class: className } = Astro.props;
+---
+<article class:list={['lu-step', tone && `lu-step--${tone}`, className]}>
+  <div class="lu-step__top">
+    <span class="lu-step__icon" aria-hidden="true"><Icon name={icon} size={30} /></span>
+    <span class="lu-step__num" aria-hidden="true">{number}</span>
+  </div>
+  <h3 class="lu-step__title"><span class="lu-sr">Schritt {number}: </span>{title}</h3>
+  <p class="lu-step__text">{text}</p>
+</article>

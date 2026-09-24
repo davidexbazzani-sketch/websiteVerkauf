@@ -1,0 +1,17 @@
+---
+/** Große Checkbox (24 px, ganze Zeile klickbar). Natives <input> bleibt im DOM. */
+import Icon from './Icon.astro';
+
+interface Props { name: string; required?: boolean; checked?: boolean; class?: string }
+const { name, required = false, checked = false, class: className } = Astro.props;
+const id = `feld-${name}`;
+---
+<div class:list={['lu-check', className]} data-field={name}>
+  <label class="lu-check__row" for={id}>
+    <span class="lu-check__wrap">
+      <input id={id} name={name} type="checkbox" value="1" class="lu-check__input" checked={checked || undefined} aria-required={required ? 'true' : undefined} required={required || undefined} />
+      <span class="lu-check__box" aria-hidden="true"><Icon name="check" size={18} strokeWidth={2.5} /></span>
+    </span>
+    <span><slot />{required && <span class="lu-field__req"> *</span>}</span>
+  </label>
+</div>

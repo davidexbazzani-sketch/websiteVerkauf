@@ -1,0 +1,79 @@
+---
+/**
+ * Anfrageformular mit allen Zuständen: normal, Fokus, Fehler bei Pflichtfeldern,
+ * Senden läuft, Erfolg, Fehler beim Senden. Ohne JavaScript ein normales POST an
+ * `config.formEndpoint`; mit JavaScript per fetch ohne Seitenwechsel (src/scripts/form.ts).
+ * Die <template>-Blöcke liefern das Markup der Zustände, die das Skript einsetzt.
+ */
+import { config, packageOptions } from '../config';
+import Field from './Field.astro';
+import Checkbox from './Checkbox.astro';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+
+interface Props { privacyHref?: string; class?: string }
+const { privacyHref = '/datenschutz', class: className } = Astro.props;
+---
+<form
+  class:list={['lu-form', className]}
+  method="post"
+  action={config.formEndpoint}
+  aria-label="Anfrage für einen kostenlosen Entwurf"
+  data-contact-form
+>
+  <div class="lu-form__row lu-form__row--2">
+    <Field label="Name" name="name" autocomplete="name" required />
+    <Field label="Name des Geschäfts" name="business" autocomplete="organization" required />
+  </div>
+  <div class="lu-form__row lu-form__row--2">
+    <Field label="Telefon" name="phone" type="tel" autocomplete="tel" inputmode="tel" hint="Freiwillig – für einen kurzen Rückruf." />
+    <Field label="E-Mail" name="email" type="email" autocomplete="email" inputmode="email" required />
+  </div>
+  <Field label="Wunschpaket" name="package" type="select" options={packageOptions} placeholderOption="Bitte wählen" />
+  <Field label="Nachricht" name="message" type="textarea" rows={5} placeholder="Erzählen Sie uns kurz von Ihrem Laden – oder wann wir am besten vorbeikommen." />
+
+  <!-- Honeypot: Menschen sehen das Feld nicht, Bots füllen es aus. -->
+  <div class="lu-hp" aria-hidden="true">
+    <label for="feld-website">Website (bitte leer lassen)</label>
+    <input id="feld-website" type="text" name="website" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <Checkbox name="privacy" required>
+    Ich habe die <a class="lu-link" href={privacyHref}>Datenschutzerklärung</a> gelesen und bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage gespeichert werden.
+  </Checkbox>
+
+  <div class="lu-form__actions">
+    <Button type="submit" size="lg" class="lu-form__submit">Anfrage senden</Button>
+    <p class="lu-form__note" style="margin-top: 12px">* Pflichtfeld</p>
+  </div>
+</form>
+
+<template data-tpl="summary">
+  <div class="lu-alert lu-alert--error" role="alert" data-summary>
+    <Icon name="hinweis" />
+    <span><span class="lu-alert__title" data-summary-title></span>Bitte prüfen Sie die markierten Felder.</span>
+  </div>
+</template>
+<template data-tpl="field-error">
+  <p class="lu-field__error" data-js-error><Icon name="hinweis" size={20} /><span></span></p>
+</template>
+<template data-tpl="send-error">
+  <div class="lu-alert lu-alert--error" role="alert" data-send-error>
+    <Icon name="hinweis" />
+    <span><span class="lu-alert__title">Das hat leider nicht geklappt.</span>Ihre Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es noch einmal – oder rufen Sie uns an: <a class="lu-link" href={config.phoneHref}>{config.phone}</a>.</span>
+  </div>
+</template>
+<template data-tpl="loading">
+  <span class="lu-spinner" aria-hidden="true"></span><span>Wird gesendet …</span>
+</template>
+<template data-tpl="success">
+  <div class="lu-success" role="status" aria-live="polite" tabindex="-1">
+    <span class="lu-success__icon" aria-hidden="true"><Icon name="check" size={32} strokeWidth={2.25} /></span>
+    <h3 class="lu-success__title">Danke!</h3>
+    <p class="lu-success__text">{config.formSuccess}</p>
+  </div>
+</template>
+
+<script>
+  import '../scripts/form';
+</script>

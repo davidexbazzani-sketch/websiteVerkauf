@@ -1,0 +1,31 @@
+---
+/** Schlichte Linien-Icons, 24er Raster, 1,75 px Strich, currentColor. */
+import { ICONS, type IconName } from '../lib/icons';
+
+interface Props {
+  name: IconName;
+  size?: number;
+  strokeWidth?: number;
+  /** Nur setzen, wenn das Icon allein Bedeutung trägt – sonst aria-hidden. */
+  label?: string;
+  class?: string;
+}
+
+const { name, size = 24, strokeWidth = 1.75, label, class: className } = Astro.props;
+const paths = ICONS[name] ?? ICONS.foto;
+---
+<svg
+  class:list={['lu-icon', className]}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={strokeWidth}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden={label ? undefined : 'true'}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  focusable="false"
+>{paths.map((d) => <path d={d} />)}</svg>

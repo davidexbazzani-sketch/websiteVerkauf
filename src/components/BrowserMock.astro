@@ -1,0 +1,35 @@
+---
+/** Platzhalter-Browserfenster für den Vorher/Nachher-Vergleich – keine echten Kundenseiten. */
+interface Props { kind: 'old' | 'new' }
+const { kind } = Astro.props;
+---
+{kind === 'old' ? (
+  <div class="lu-mock lu-mock--old" aria-hidden="true">
+    <div class="lu-mock__chrome"><i></i><i></i><i></i></div>
+    <div class="lu-mock__page">
+      <p class="lu-mock__h">Herzlich Willkommen auf unserer Homepage!!!</p>
+      <div class="lu-mock__links">Home | Über uns | Angebote | Gästebuch | Links</div>
+      <div class="lu-mock__grid">
+        <div class="lu-mock__box"></div>
+        <div>
+          <p class="lu-mock__p">Diese Seite befindet sich im Aufbau. Unsere Öffnungszeiten entnehmen Sie bitte dem Aushang im Schaufenster.</p>
+          <p class="lu-mock__p">Letzte Aktualisierung: 14.03.2009</p>
+          <span class="lu-mock__counter">Besucher: 004127</span>
+        </div>
+      </div>
+      <div class="lu-mock__grid lu-mock__grid--3"><div class="lu-mock__box"></div><div class="lu-mock__box"></div><div class="lu-mock__box"></div></div>
+      <p class="lu-mock__p lu-mock__foot">Optimiert für Internet Explorer 6 bei 800×600</p>
+    </div>
+  </div>
+) : (
+  <div class="lu-mock lu-mock--new" aria-hidden="true">
+    <div class="lu-mock__chrome"><i></i><i></i><i></i></div>
+    <div class="lu-mock__nav">Blumen am Hang<span></span></div>
+    <div class="lu-mock__page">
+      <p class="lu-mock__h">Sträuße, die nach Garten duften.</p>
+      <p class="lu-mock__p">Di–Sa 9–18 Uhr · Bestellung per Telefon</p>
+      <span class="lu-mock__btn"></span>
+      <div class="lu-mock__imgs"><i></i><i></i><i></i></div>
+    </div>
+  </div>
+)}

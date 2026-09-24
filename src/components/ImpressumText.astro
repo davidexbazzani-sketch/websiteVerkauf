@@ -1,0 +1,20 @@
+---
+/** Gerüst für das Impressum – Platzhalter in [Klammern], keine Rechtsberatung. */
+import { config } from '../config';
+---
+<h2>Angaben gemäß § 5 DDG</h2>
+<address>
+  <span class="lu-ph">[Name des Unternehmens bzw. der Gesellschaft, Rechtsform]</span><br />
+  <span class="lu-ph">[Straße Hausnummer]</span><br />
+  <span class="lu-ph">[PLZ]</span> Hamburg
+</address>
+<h3>Vertreten durch</h3>
+<p><span class="lu-ph">[Vor- und Nachnamen aller Inhaber bzw. Gesellschafter]</span></p>
+<h2>Kontakt</h2>
+<p>Telefon: <a href={config.phoneHref}>{config.phone}</a><br />E-Mail: <a href={config.emailHref}>{config.email}</a></p>
+<h2>Umsatzsteuer</h2>
+<p>Kleinunternehmer gemäß § 19 UStG – es wird keine Umsatzsteuer berechnet und daher keine Umsatzsteuer-Identifikationsnummer ausgewiesen.</p>
+<h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+<p><span class="lu-ph">[Vor- und Nachname, Anschrift wie oben]</span></p>
+<h2>Verbraucherstreitbeilegung</h2>
+<p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>

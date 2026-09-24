@@ -1,0 +1,16 @@
+---
+/** Kasten neben dem Formular: Telefon, WhatsApp, E-Mail und der Hinweis auf die Region. */
+import { config } from '../config';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+
+interface Props { class?: string }
+const { class: className } = Astro.props;
+---
+<aside class:list={['lu-contact-info', className]} aria-label="Direkter Kontakt">
+  <h3 class="lu-contact-info__title">Lieber direkt?</h3>
+  <a class="lu-contact-info__phone" href={config.phoneHref}><Icon name="telefon" size={28} />{config.phone}</a>
+  <Button href={config.whatsappHref} variant="secondary" icon="chat" block target="_blank" rel="noopener">Per WhatsApp schreiben</Button>
+  <a class="lu-contact-info__mail" href={config.emailHref}><Icon name="mail" />{config.email}</a>
+  <p class="lu-contact-info__note"><Icon name="ort" />{config.region}</p>
+</aside>

@@ -1,0 +1,42 @@
+/* Ergänzungen zur Umsetzung – alles, was bundle.css nicht abdeckt.
+   Keine neuen Farben oder Maße: nur Tokens aus tokens.css. */
+
+html { background: var(--surface); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+/* Anker landen nicht unter dem Header (64 px mobil, 80 px Desktop). */
+.lu-section, .lu-hero { scroll-margin-top: 64px; }
+@media (min-width: 880px) { .lu-section, .lu-hero { scroll-margin-top: var(--header-height); } }
+
+/* Vier Pakete: ab 880 px zwei Spalten, ab 1160 px vier. */
+@container (min-width: 880px) {
+  .lu-prices { grid-template-columns: repeat(2, 1fr); }
+}
+@container (min-width: 1160px) {
+  .lu-prices { grid-template-columns: repeat(4, 1fr); }
+  .lu-price__value { font-size: 40px; line-height: 48px; }
+}
+
+/* Honeypot: für Menschen unsichtbar, für Bots ein normales Feld. */
+.lu-hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+
+/* Hero-Foto als echtes Bild */
+.lu-hero__arch img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Ohne JavaScript: Menü offen, Vergleich als zwei Karten nebeneinander. */
+.no-js .lu-header__panel { display: block; box-shadow: none; }
+.no-js .lu-header__burger { display: none; }
+@container (min-width: 880px) { .no-js .lu-header__panel { display: none; } }
+.no-js .lu-ba { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); aspect-ratio: auto; background: none; box-shadow: none; overflow: visible; }
+.no-js .lu-ba__layer { position: relative; inset: auto; container-type: inline-size; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); clip-path: none; }
+.no-js .lu-ba__layer--before { order: -1; }
+.no-js .lu-ba__range, .no-js .lu-ba__line, .no-js .lu-ba__knob { display: none; }
+
+/* Erfolgsseite ohne JavaScript und 404 */
+.lu-standalone { max-width: var(--prose-max); padding: var(--space-6) 0 var(--space-8); }
+.lu-standalone .lu-success { margin-top: var(--space-5); }
+@container (min-width: 880px) { .lu-standalone { padding: var(--space-12) 0 var(--space-16); } }
+
+/* Burger: Icon wechselt mit dem Menü-Zustand */
+.lu-header--open .lu-header__icon-menu, .lu-header:not(.lu-header--open) .lu-header__icon-close { display: none; }
+

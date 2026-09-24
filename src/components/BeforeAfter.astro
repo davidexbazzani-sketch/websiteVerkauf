@@ -1,0 +1,52 @@
+---
+/**
+ * Vergleichs-Slider: ein natives <input type="range"> liegt unsichtbar über dem Bild,
+ * dadurch per Maus, Touch, Tastatur und Screenreader bedienbar. Ohne JavaScript
+ * stehen Vorher und Nachher als zwei Karten nebeneinander (site.css, .no-js).
+ */
+import Badge from './Badge.astro';
+import Icon from './Icon.astro';
+import BrowserMock from './BrowserMock.astro';
+
+interface Props {
+  /** Prozent 0–100 */
+  initial?: number;
+  labelBefore?: string;
+  labelAfter?: string;
+  ariaLabel?: string;
+  caption?: string;
+  class?: string;
+}
+const {
+  initial = 50, labelBefore = 'Vorher', labelAfter = 'Nachher',
+  ariaLabel = 'Vergleich verschieben: links vorher, rechts nachher', caption, class: className,
+} = Astro.props;
+const hasBefore = Astro.slots.has('before');
+const hasAfter = Astro.slots.has('after');
+---
+<figure class:list={['lu-ba', className]} style={`--pos: ${initial}%; margin: 0`}>
+  <div class="lu-ba__layer lu-ba__layer--after">{hasAfter ? <slot name="after" /> : <BrowserMock kind="new" />}</div>
+  <div class="lu-ba__layer lu-ba__layer--before">{hasBefore ? <slot name="before" /> : <BrowserMock kind="old" />}</div>
+  <Badge tone="paper" class="lu-ba__tag lu-ba__tag--before">{labelBefore}</Badge>
+  <Badge tone="sage" class="lu-ba__tag lu-ba__tag--after">{labelAfter}</Badge>
+  <span class="lu-ba__line" aria-hidden="true"></span>
+  <input
+    class="lu-ba__range" type="range" min="0" max="100" step="1" value={initial}
+    aria-label={ariaLabel} aria-valuetext={`${initial} Prozent Vorher sichtbar`}
+  />
+  <span class="lu-ba__knob" aria-hidden="true"><Icon name="griff" size={22} /></span>
+  {caption && <figcaption class="lu-sr">{caption}</figcaption>}
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.lu-ba').forEach((figure) => {
+    const range = figure.querySelector<HTMLInputElement>('.lu-ba__range');
+    if (!range) return;
+    const update = () => {
+      figure.style.setProperty('--pos', `${range.value}%`);
+      range.setAttribute('aria-valuetext', `${range.value} Prozent Vorher sichtbar`);
+    };
+    range.addEventListener('input', update);
+    update();
+  });
+</script>

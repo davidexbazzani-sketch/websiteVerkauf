@@ -1,0 +1,38 @@
+---
+/** Fußzeile mit Wortmarke, Kurzbeschreibung, Kontaktdaten und Links zu Impressum und Datenschutz. */
+import { config } from '../config';
+import Wordmark from './Wordmark.astro';
+
+interface Props { homeHref?: string; class?: string }
+const { homeHref = '#top', class: className } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class:list={['lu-footer', className]}>
+  <div class="lu-container">
+    <div class="lu-footer__inner">
+      <div>
+        <Wordmark href={homeHref} />
+        <p class="lu-footer__desc">{config.description}</p>
+      </div>
+      <div>
+        <h2 class="lu-footer__h">Kontakt</h2>
+        <ul class="lu-footer__list">
+          <li><a href={config.phoneHref}>{config.phone}</a></li>
+          <li><a href={config.emailHref}>{config.email}</a></li>
+          <li><a href={config.whatsappHref}>WhatsApp</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="lu-footer__h">Rechtliches</h2>
+        <ul class="lu-footer__list">
+          <li><a href="/impressum">Impressum</a></li>
+          <li><a href="/datenschutz">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="lu-footer__bottom">
+      <span>© {year} {config.name}</span>
+      <span>Ohne Cookies und ohne Tracking.</span>
+    </div>
+  </div>
+</footer>

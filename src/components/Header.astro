@@ -1,0 +1,73 @@
+---
+/**
+ * Sticky Kopfzeile: Skip-Link, Wortmarke, Ankernavigation, Button und Burger-Menü.
+ * Das Menü wird mit wenig Vanilla-JS geöffnet (Esc schließt, Fokus zurück auf den Button).
+ */
+import { config } from '../config';
+import Wordmark from './Wordmark.astro';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+
+interface Props { current?: string; skipHref?: string; class?: string }
+const { current, skipHref = '#inhalt', class: className } = Astro.props;
+const panelId = 'hauptmenue';
+---
+<header class:list={['lu-header', className]}>
+  <a class="lu-skip" href={skipHref}>Zum Inhalt springen</a>
+  <div class="lu-container">
+    <div class="lu-header__bar">
+      <Wordmark />
+      <nav class="lu-header__nav" aria-label="Hauptnavigation">
+        <ul>
+          {config.nav.map((l) => (
+            <li><a href={l.href} aria-current={current === l.href ? 'true' : undefined}>{l.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <Button class="lu-header__cta" href={config.cta.href}>{config.cta.label}</Button>
+      <button type="button" class="lu-header__burger" aria-expanded="false" aria-controls={panelId} aria-label="Menü öffnen">
+        <Icon name="menu" size={28} class="lu-header__icon-menu" />
+        <Icon name="close" size={28} class="lu-header__icon-close" />
+      </button>
+    </div>
+  </div>
+  <div class="lu-header__panel" id={panelId} hidden>
+    <div class="lu-container">
+      <nav aria-label="Hauptnavigation mobil">
+        <ul>
+          {config.nav.map((l) => (
+            <li><a href={l.href}>{l.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <Button href={config.cta.href} size="lg" block>{config.cta.label}</Button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.lu-header');
+  const burger = header?.querySelector<HTMLButtonElement>('.lu-header__burger');
+  const panel = header?.querySelector<HTMLElement>('.lu-header__panel');
+
+  if (header && burger && panel) {
+    const setOpen = (open: boolean) => {
+      header.classList.toggle('lu-header--open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+      panel.hidden = !open;
+    };
+    const isOpen = () => burger.getAttribute('aria-expanded') === 'true';
+
+    burger.addEventListener('click', () => setOpen(!isOpen()));
+    panel.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen()) {
+        setOpen(false);
+        burger.focus();
+      }
+    });
+  }
+</script>

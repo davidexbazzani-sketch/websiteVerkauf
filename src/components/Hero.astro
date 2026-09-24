@@ -1,0 +1,75 @@
+---
+/**
+ * Erster Bildschirm. Variante A `split` („Bogenfenster“): Text links, Bogenfoto rechts.
+ * Variante B `window` („Schaufenster“): zentrierter Text, drei Fotos wie eine Auslage.
+ */
+import { config } from '../config';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import PhotoPlaceholder from './PhotoPlaceholder.astro';
+
+interface Props {
+  variant?: 'split' | 'window';
+  eyebrow?: string;
+  title?: string;
+  emphasis?: string;
+  subtitle?: string;
+  cta?: { label: string; href: string };
+  secondary?: { label: string; href: string };
+  trust?: string[];
+  /** Nur Variante split */
+  note?: string;
+  id?: string;
+  class?: string;
+}
+
+const h = config.hero;
+const {
+  variant = 'split', eyebrow = h.eyebrow, title = h.title, emphasis = h.emphasis, subtitle = h.subtitle,
+  cta = config.cta, secondary = h.secondary, trust = h.trust, note = h.note, id = 'top', class: className,
+} = Astro.props;
+
+// Hervorgehobenes Wort im Titel kursiv setzen
+const i = emphasis ? title.indexOf(emphasis) : -1;
+const parts = i >= 0 ? { before: title.slice(0, i), em: emphasis, after: title.slice(i + emphasis.length) } : null;
+---
+<section class:list={['lu-hero', `lu-hero--${variant}`, className]} id={id} aria-labelledby="hero-titel">
+  <div class="lu-container">
+    <div class="lu-hero__inner">
+      <div class="lu-hero__text">
+        {eyebrow && <span class="lu-eyebrow">{eyebrow}</span>}
+        <h1 class="lu-hero__title" id="hero-titel">{parts ? <>{parts.before}<em>{parts.em}</em>{parts.after}</> : title}</h1>
+        <p class="lu-hero__sub">{subtitle}</p>
+        <div class="lu-hero__ctas">
+          <Button href={cta.href} size="lg">{cta.label}</Button>
+          <Button href={secondary.href} size="lg" variant="secondary">{secondary.label}</Button>
+        </div>
+        {trust && trust.length > 0 && (
+          <ul class="lu-hero__trust">
+            {trust.map((t) => <li><Icon name="check" size={20} />{t}</li>)}
+          </ul>
+        )}
+      </div>
+
+      {variant === 'window' ? (
+        <div class="lu-hero__window">
+          <div class="lu-hero__panes">
+            <PhotoPlaceholder label="Ladenfront im Morgenlicht" tone="lavender" shape="arch" priority />
+            <PhotoPlaceholder label="Hände beim Blumenbinden" tone="peach" priority />
+            <PhotoPlaceholder label="Kaffee am Tresen" tone="sky" priority />
+          </div>
+        </div>
+      ) : (
+        <div class="lu-hero__media">
+          <PhotoPlaceholder label="Ladenfront im Morgenlicht" tone="peach" shape="arch" class="lu-hero__arch" priority />
+          <PhotoPlaceholder label="Kaffee am Tresen" tone="lavender" class="lu-hero__small" hideLabel priority />
+          {note && (
+            <p class="lu-hero__note">
+              <span class="lu-hero__note-icon" aria-hidden="true"><Icon name="besuch" size={22} /></span>{note}
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+</section>

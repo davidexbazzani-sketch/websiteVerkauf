@@ -1,0 +1,13 @@
+---
+/** Erfolgsseite für den Versand ohne JavaScript (der Server leitet hierher weiter). */
+import Base from '../layouts/Base.astro';
+import LegalPage from '../components/LegalPage.astro';
+import Button from '../components/Button.astro';
+import { config } from '../config';
+---
+<Base title="Danke" description="Ihre Anfrage ist angekommen." noindex>
+  <LegalPage kind="custom" title="Danke!">
+    <p class="lu-sh__intro" style="margin: 0 0 var(--space-5)">{config.formSuccess}</p>
+    <Button href="/" variant="secondary" icon="zurueck">Zur Startseite</Button>
+  </LegalPage>
+</Base>

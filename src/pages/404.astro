@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import LegalPage from '../components/LegalPage.astro';
+import Button from '../components/Button.astro';
+---
+<Base title="Seite nicht gefunden" description="Diese Seite gibt es nicht oder nicht mehr." noindex>
+  <LegalPage kind="custom" title="Diese Seite gibt es nicht">
+    <p class="lu-sh__intro" style="margin: 0 0 var(--space-5)">Vielleicht hat sich die Adresse geändert oder ein Tippfehler eingeschlichen. Auf der Startseite finden Sie alles Wichtige.</p>
+    <Button href="/" icon="zurueck">Zur Startseite</Button>
+  </LegalPage>
+</Base>

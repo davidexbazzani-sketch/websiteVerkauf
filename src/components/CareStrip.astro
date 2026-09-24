@@ -1,0 +1,15 @@
+---
+/** Schmale Zeile unter den Preiskarten mit den Pflege-Abos. */
+import { config } from '../config';
+
+interface Props { class?: string }
+const { class: className } = Astro.props;
+---
+<div class:list={['lu-care', className]}>
+  <p class="lu-care__label" style="margin: 0">Pflege-Abos</p>
+  <ul class="lu-care__plans">
+    {config.care.map((p) => (
+      <li class="lu-care__plan"><strong>{p.name} · {p.price}</strong><br />{p.text}</li>
+    ))}
+  </ul>
+</div>

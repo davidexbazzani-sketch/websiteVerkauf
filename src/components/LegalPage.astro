@@ -1,0 +1,54 @@
+---
+/**
+ * Schlichtes Text-Layout für Impressum, Datenschutz, Danke und 404:
+ * schmale Kopfzeile mit „Zur Startseite“, eine Textspalte (max. 720 px), Footer.
+ */
+import { config } from '../config';
+import Wordmark from './Wordmark.astro';
+import Icon from './Icon.astro';
+import Footer from './Footer.astro';
+import ImpressumText from './ImpressumText.astro';
+import DatenschutzText from './DatenschutzText.astro';
+
+interface Props {
+  kind?: 'impressum' | 'datenschutz' | 'custom';
+  title?: string;
+  /** Datum „Stand“; leer = keine Zeile */
+  updated?: string;
+  homeHref?: string;
+  /** Gelber Entwurfshinweis – vor dem Livegang in config.legal.showNotice abschalten */
+  showNotice?: boolean;
+  class?: string;
+}
+const {
+  kind = 'impressum',
+  title = kind === 'datenschutz' ? 'Datenschutzerklärung' : 'Impressum',
+  updated = kind === 'custom' ? undefined : config.legal.updated,
+  homeHref = '/',
+  showNotice = kind === 'custom' ? false : config.legal.showNotice,
+  class: className,
+} = Astro.props;
+---
+<div class:list={['lu-legal', className]}>
+  <header class="lu-legal__bar">
+    <a class="lu-skip" href="#inhalt">Zum Inhalt springen</a>
+    <div class="lu-container">
+      <Wordmark href={homeHref} />
+      <a class="lu-legal__back" href={homeHref}><Icon name="zurueck" size={20} />Zur Startseite</a>
+    </div>
+  </header>
+  <main class="lu-container" id="inhalt">
+    <article class="lu-prose">
+      <h1>{title}</h1>
+      {updated && <p class="lu-prose__meta">Stand: {updated}</p>}
+      {showNotice && (
+        <p class="lu-prose__notice">
+          <Icon name="hinweis" />
+          <span>Entwurf: Texte in <span class="lu-ph">[Klammern]</span> vor dem Livegang ergänzen und rechtlich prüfen lassen. Diesen Hinweis dann entfernen.</span>
+        </p>
+      )}
+      {Astro.slots.has('default') ? <slot /> : kind === 'datenschutz' ? <DatenschutzText /> : <ImpressumText />}
+    </article>
+  </main>
+  <Footer homeHref={homeHref} />
+</div>

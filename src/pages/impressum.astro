@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import LegalPage from '../components/LegalPage.astro';
+import { config } from '../config';
+---
+<Base title="Impressum" description={`Impressum von ${config.name} – Anbieterkennzeichnung und Kontakt.`} ogSlug="impressum">
+  <LegalPage kind="impressum" />
+</Base>

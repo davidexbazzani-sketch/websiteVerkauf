@@ -1,0 +1,22 @@
+---
+/** Sektion „Pakete & Preise“ (#pakete): Preiskarten, Pflege-Abos und Fußnote. */
+import { config } from '../config';
+import SectionHeading from './SectionHeading.astro';
+import PriceCard from './PriceCard.astro';
+import CareStrip from './CareStrip.astro';
+
+interface Props { id?: string; class?: string }
+const { id = 'pakete', class: className } = Astro.props;
+---
+<section class:list={['lu-section', className]} id={id} aria-labelledby="pakete-titel">
+  <div class="lu-container lu-section__inner">
+    <SectionHeading eyebrow="Pakete" title="Pakete & Preise" titleId="pakete-titel" intro="Feste Preise, keine versteckten Kosten. Der erste Entwurf ist immer kostenlos." />
+    <ul class="lu-prices">
+      {config.packages.map((p) => (
+        <li><PriceCard {...p} ctaHref="#kontakt" /></li>
+      ))}
+    </ul>
+    <CareStrip />
+    <p class="lu-footnote">{config.priceNote}</p>
+  </div>
+</section>

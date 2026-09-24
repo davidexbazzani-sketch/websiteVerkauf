@@ -1,0 +1,38 @@
+---
+/** Preiskarte: Name, Kurzbeschreibung, Preis, Leistungen mit Häkchen und Button „Paket anfragen“. */
+import Badge from './Badge.astro';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  id: string;
+  name: string;
+  price: string;
+  desc?: string;
+  unit?: string;
+  features: string[];
+  highlighted?: boolean;
+  badge?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  class?: string;
+}
+const {
+  id, name, price, desc, unit = 'einmalig', features, highlighted = false,
+  badge = 'Beliebt', ctaLabel = 'Paket anfragen', ctaHref = '#kontakt', class: className,
+} = Astro.props;
+const titleId = `paket-${id}-titel`;
+---
+<article class:list={['lu-price', highlighted && 'lu-price--hl', className]} aria-labelledby={titleId}>
+  {highlighted && <Badge class="lu-price__badge" icon="herz">{badge}</Badge>}
+  <h3 class="lu-price__name" id={titleId}>{name}</h3>
+  {desc && <p class="lu-price__desc">{desc}</p>}
+  <p class="lu-price__amount">
+    <span class="lu-price__value">{price}</span>
+    <span class="lu-price__unit">{unit}</span>
+  </p>
+  <ul class="lu-price__list">
+    {features.map((f) => <li><Icon name="check" size={20} />{f}</li>)}
+  </ul>
+  <Button href={ctaHref} variant={highlighted ? 'primary' : 'secondary'} block aria-label={`${ctaLabel}: ${name}`} data-paket={name}>{ctaLabel}</Button>
+</article>

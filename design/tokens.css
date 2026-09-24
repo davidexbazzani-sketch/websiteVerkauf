@@ -1,0 +1,67 @@
+/* Studio Elbschein – Design Tokens (aus tokens.json erzeugt) */
+@font-face { font-family: "Fraunces Variable"; src: url("./fonts/fraunces-latin-opsz-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fraunces Variable"; src: url("./fonts/fraunces-latin-opsz-italic.woff2") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Inter Variable"; src: url("./fonts/inter-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+:root {
+  /* Farben */
+  --cream: #fffbf5;
+  --paper: #ffffff;
+  --sage: #9cc5a1;
+  --sage-hover: #86b38c;
+  --sage-pressed: #78a87f;
+  --sage-soft: #e3f0e4;
+  --sage-deep: #3d6a46;
+  --peach: #f7c8a8;
+  --peach-soft: #fce7d8;
+  --lavender: #cdb4db;
+  --lavender-soft: #eee4f3;
+  --sky: #d6eaf8;
+  --sky-soft: #ebf5fc;
+  --ink: #2e2e3a;
+  --ink-muted: #585866;
+  --line: #e8e0d4;
+  --line-strong: #8c8a94;
+  --error: #a8322d;
+  --error-soft: #fbe6e3;
+  --success: var(--sage-deep);
+  --surface: var(--cream);
+  --surface-raised: var(--paper);
+  --surface-card: var(--sky);
+  --primary: var(--sage);
+  --on-primary: var(--ink);
+  --link: var(--sage-deep);
+  --focus: var(--ink);
+  /* Abstände (8-px-Raster) */
+  --space-half: 4px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-10: 80px;
+  --space-12: 96px;
+  --space-16: 128px;
+  /* Radien */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-xl: 40px;
+  --radius-full: 9999px;
+  /* Schatten */
+  --shadow-sm: 0 1px 2px #2e2e3a0d, 0 2px 8px #2e2e3a0f;
+  --shadow-md: 0 4px 8px #2e2e3a0a, 0 12px 32px -8px #2e2e3a1f;
+  --shadow-lg: 0 8px 16px #2e2e3a0d, 0 24px 56px -16px #2e2e3a33;
+  --focus-ring: 0 0 0 2px #fffbf5, 0 0 0 4px #2e2e3a;
+  /* Maße */
+  --container-max: 1200px;
+  --prose-max: 720px;
+  --breakpoint: 880px;
+  --control-md: 48px;
+  --control-lg: 56px;
+  --header-height: 80px;
+  /* Schriften */
+  --font-display: "Fraunces Variable", Fraunces, Georgia, "Times New Roman", serif;
+  --font-body: "Inter Variable", Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}

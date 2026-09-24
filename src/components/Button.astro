@@ -1,0 +1,48 @@
+---
+/** Pillenförmiger Button. Mit `href` ein <a>, sonst ein <button>. */
+import Icon from './Icon.astro';
+import type { IconName } from '../lib/icons';
+
+interface Props {
+  variant?: 'primary' | 'secondary';
+  size?: 'md' | 'lg';
+  href?: string;
+  icon?: IconName;
+  iconRight?: IconName;
+  loading?: boolean;
+  loadingLabel?: string;
+  block?: boolean;
+  type?: 'button' | 'submit';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = 'primary', size = 'md', href, icon, iconRight, loading = false,
+  loadingLabel = 'Wird gesendet …', block = false, type = 'button', class: className, ...rest
+} = Astro.props;
+
+const cls = ['lu-btn', `lu-btn--${variant}`, size === 'lg' && 'lu-btn--lg', block && 'lu-btn--block', className];
+---
+{href && !loading ? (
+  <a class:list={cls} href={href} {...rest}>
+    {icon && <Icon name={icon} size={20} />}
+    <span><slot /></span>
+    {iconRight && <Icon name={iconRight} size={20} />}
+  </a>
+) : (
+  <button type={type} class:list={cls} {...rest} aria-busy={loading ? 'true' : undefined} disabled={loading || undefined}>
+    {loading ? (
+      <>
+        <span class="lu-spinner" aria-hidden="true"></span>
+        <span>{loadingLabel}</span>
+      </>
+    ) : (
+      <>
+        {icon && <Icon name={icon} size={20} />}
+        <span><slot /></span>
+        {iconRight && <Icon name={iconRight} size={20} />}
+      </>
+    )}
+  </button>
+)}

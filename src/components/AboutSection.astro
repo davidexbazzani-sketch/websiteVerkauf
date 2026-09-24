@@ -1,0 +1,20 @@
+---
+/** Sektion „Über uns“ (#ueber-uns): Überschrift, Leitsatz in Fraunces und drei Personenkarten. */
+import { config } from '../config';
+import SectionHeading from './SectionHeading.astro';
+import PersonCard from './PersonCard.astro';
+
+interface Props { id?: string; lead?: string; class?: string }
+const { id = 'ueber-uns', lead = config.about.lead, class: className } = Astro.props;
+---
+<section class:list={['lu-section', 'lu-section--lavender', className]} id={id} aria-labelledby="ueber-uns-titel">
+  <div class="lu-container lu-section__inner">
+    <SectionHeading eyebrow="Über uns" title="Drei Leute aus der Nachbarschaft" titleId="ueber-uns-titel" />
+    <p class="lu-about__lead">{lead}</p>
+    <ul class="lu-people">
+      {config.about.people.map((p) => (
+        <li><PersonCard {...p} /></li>
+      ))}
+    </ul>
+  </div>
+</section>

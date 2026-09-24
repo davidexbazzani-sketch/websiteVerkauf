@@ -1,0 +1,18 @@
+---
+/** Überzeile, Überschrift und optionale Einleitung am Anfang jeder Sektion. */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  align?: 'left' | 'center';
+  as?: 'h1' | 'h2' | 'h3';
+  titleId?: string;
+  class?: string;
+}
+const { eyebrow, title, intro, align = 'left', as: Tag = 'h2', titleId, class: className } = Astro.props;
+---
+<div class:list={['lu-sh', align === 'center' && 'lu-sh--center', className]}>
+  {eyebrow && <span class="lu-eyebrow">{eyebrow}</span>}
+  <Tag class="lu-sh__title" id={titleId}>{title}</Tag>
+  {intro && <p class="lu-sh__intro">{intro}</p>}
+</div>

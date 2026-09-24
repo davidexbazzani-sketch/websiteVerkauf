@@ -1,0 +1,30 @@
+---
+/** Allgemeine Karte mit optionalem Bild, Badge, Überzeile, Titel, Text und „Mehr“-Zeile. */
+import Badge from './Badge.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  tone?: 'sky' | 'paper' | 'peach' | 'lavender' | 'sage';
+  badge?: string;
+  eyebrow?: string;
+  title?: string;
+  headingLevel?: 'h2' | 'h3' | 'h4';
+  href?: string;
+  more?: string;
+  text?: string;
+  class?: string;
+}
+const { tone, badge, eyebrow, title, headingLevel: HTag = 'h3', href, more, text, class: className } = Astro.props;
+const Tag = href ? 'a' : 'article';
+const hasMedia = Astro.slots.has('media');
+---
+<Tag class:list={['lu-card', tone && `lu-card--${tone}`, className]} href={href}>
+  {badge && <Badge tone="paper" class="lu-card__badge">{badge}</Badge>}
+  {hasMedia && <div class="lu-card__media"><slot name="media" /></div>}
+  <div class="lu-card__body">
+    {eyebrow && <span class="lu-eyebrow">{eyebrow}</span>}
+    {title && <HTag class="lu-card__title">{title}</HTag>}
+    {text ? <p class="lu-card__text">{text}</p> : <slot />}
+    {more && <span class="lu-card__more">{more}<Icon name="pfeil" size={20} /></span>}
+  </div>
+</Tag>

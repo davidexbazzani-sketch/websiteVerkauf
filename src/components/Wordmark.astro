@@ -1,0 +1,8 @@
+---
+/** Der Name als Wortmarke in Fraunces – es gibt kein Bildlogo. */
+import { config } from '../config';
+
+interface Props { href?: string; class?: string }
+const { href = '#top', class: className } = Astro.props;
+---
+<a class:list={['lu-wordmark', className]} href={href} aria-label={`${config.name} – zur Startseite`}>{config.name}</a>

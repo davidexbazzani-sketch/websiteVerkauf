@@ -1,0 +1,48 @@
+---
+/**
+ * Beschriftetes Formularfeld: Text, E-Mail, Telefon, Auswahl oder mehrzeilig,
+ * mit Hinweiszeile. Fehlerzeilen setzt das Formular-Skript ein (gleiches Markup).
+ */
+import Icon from './Icon.astro';
+
+interface Props {
+  label: string;
+  name: string;
+  type?: 'text' | 'email' | 'tel' | 'select' | 'textarea';
+  required?: boolean;
+  hint?: string;
+  options?: string[];
+  placeholderOption?: string;
+  rows?: number;
+  placeholder?: string;
+  autocomplete?: string;
+  inputmode?: 'text' | 'tel' | 'email';
+  value?: string;
+  class?: string;
+}
+const {
+  label, name, type = 'text', required = false, hint, options = [], placeholderOption, rows = 5,
+  placeholder, autocomplete, inputmode, value, class: className,
+} = Astro.props;
+const id = `feld-${name}`;
+const hintId = `${id}-hint`;
+---
+<div class:list={['lu-field', className]} data-field={name}>
+  <label class="lu-field__label" for={id}>{label}{required && <span class="lu-field__req"> *<span class="lu-sr"> (Pflichtfeld)</span></span>}</label>
+  <div class="lu-field__control">
+    {type === 'select' ? (
+      <>
+        <select id={id} name={name} class="lu-input" aria-describedby={hint ? hintId : undefined} aria-required={required ? 'true' : undefined} required={required || undefined}>
+          {placeholderOption && <option value="">{placeholderOption}</option>}
+          {options.map((o) => <option value={o} selected={o === value || undefined}>{o}</option>)}
+        </select>
+        <Icon name="runter" size={20} class="lu-field__chevron" />
+      </>
+    ) : type === 'textarea' ? (
+      <textarea id={id} name={name} class="lu-input" rows={rows} placeholder={placeholder} aria-describedby={hint ? hintId : undefined} aria-required={required ? 'true' : undefined} required={required || undefined}>{value}</textarea>
+    ) : (
+      <input id={id} name={name} type={type} class="lu-input" value={value} placeholder={placeholder} autocomplete={autocomplete} inputmode={inputmode} aria-describedby={hint ? hintId : undefined} aria-required={required ? 'true' : undefined} required={required || undefined} />
+    )}
+  </div>
+  {hint && <p class="lu-field__hint" id={hintId}>{hint}</p>}
+</div>
