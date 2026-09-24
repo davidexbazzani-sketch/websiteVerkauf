@@ -2,15 +2,16 @@
  * Zentrale Konfiguration der Website.
  *
  * Alles, was sich später ändern kann, steht hier an genau einer Stelle:
- * Name, Kontaktdaten, Domain, Pakete, Preise, Pflege-Abos und der
+ * Name, Kontaktdaten, Domain, Texte, Pakete, Preise, Pflege-Abos und der
  * Endpoint des Kontaktformulars. Platzhalter stehen in [eckigen Klammern].
  */
 
 export interface Link { label: string; href: string }
 export interface Step { icon: 'besuch' | 'kamera' | 'online'; title: string; text: string; tone: 'peach' | 'lavender' | 'sage' }
 export interface Example { title: string; text: string; photo: string; tone: 'peach' | 'lavender' | 'sky'; href?: string }
+export interface Point { eyebrow: string; title: string; text: string; tone: 'peach' | 'lavender' | 'sage' | 'sky' | 'paper' }
 export interface Package { id: string; name: string; price: string; unit?: string; desc: string; features: string[]; highlighted?: boolean }
-export interface CarePlan { name: string; price: string; text: string }
+export interface CarePlan { name: string; price?: string; text: string }
 export interface Person { name: string; role: string; quote: string; photo: string; tone: 'peach' | 'lavender' | 'sky' }
 
 export const config = {
@@ -26,8 +27,10 @@ export const config = {
   whatsappHref: 'https://wa.me/49000000000',
   email: '[hallo@DOMAIN.de]',
   emailHref: 'mailto:hallo@example.de',
-  region: 'Wir sind in Blankenese, Rissen und Wedel unterwegs – gern auch persönlich.',
-  description: 'Moderne Websites mit eigenen Fotos für inhabergeführte Geschäfte in Blankenese, Rissen und Wedel.',
+  region: 'Wir kommen persönlich bei Ihnen vorbei – Sie müssen nichts vorbereiten.',
+  description: 'Moderne Websites mit eigenen Fotos für Läden, Cafés, Restaurants und Dienstleister – persönlich betreut, von A bis Z.',
+  /** Kurzform für den Seitentitel der Startseite */
+  tagline: 'Websites für Läden, Cafés und Restaurants',
 
   /**
    * Kontaktformular. Wohin die Anfragen gehen, hängt vom Hosting ab.
@@ -39,7 +42,7 @@ export const config = {
    */
   formEndpoint: '/api/anfrage',
   formSuccessPath: '/danke',
-  formSuccess: 'Anna meldet sich innerhalb von 24 Stunden.',
+  formSuccess: 'Wir melden uns innerhalb von 24 Stunden bei Ihnen.',
   formPackageUnknown: 'Weiß ich noch nicht',
 
   nav: [
@@ -51,20 +54,47 @@ export const config = {
   cta: { label: 'Kostenlosen Entwurf anfragen', href: '#kontakt' } as Link,
 
   hero: {
-    eyebrow: 'Für Läden in den Elbvororten',
-    title: 'Ihr Laden verdient eine Website, die so schön ist wie Ihr Schaufenster.',
-    emphasis: 'Schaufenster',
-    subtitle: 'Moderne Websites für Geschäfte in Blankenese, Rissen und Wedel – mit eigenen Fotos, persönlich betreut.',
+    eyebrow: 'Für Läden, Cafés, Restaurants und Dienstleister',
+    title: 'Ihre Kunden lieben, was Sie tun. Ihre Website sollte das zeigen.',
+    emphasis: 'lieben',
+    subtitle: 'Moderne Websites mit eigenen Fotos – persönlich betreut, von A bis Z. Bezahlt wird erst, wenn Sie zufrieden sind.',
     secondary: { label: 'Pakete ansehen', href: '#pakete' } as Link,
-    trust: ['Kostenloser Entwurf', 'Eigene Fotos statt Stockbilder', 'Persönlich vor Ort'],
-    note: 'Anna bringt Ihren Entwurf persönlich vorbei – kostenlos.',
+    trust: ['Kostenloser Entwurf', 'Eigene Fotos statt Stockbilder', 'Bezahlung erst bei Zufriedenheit'],
+    note: 'Wir bringen Ihren Entwurf persönlich vorbei – kostenlos.',
   },
 
-  steps: [
-    { icon: 'besuch', title: 'Wir kommen vorbei', text: 'Anna besucht Sie im Laden und zeigt Ihnen einen kostenlosen Entwurf – ganz unverbindlich.', tone: 'peach' },
-    { icon: 'kamera', title: 'Jan fotografiert Ihren Laden', text: 'Schaufenster, Produkte, Team: echte Bilder aus Ihrem Geschäft statt austauschbarer Stockfotos.', tone: 'lavender' },
-    { icon: 'online', title: 'Ihre Website geht online', text: 'Davide baut die Seite, richtet Adresse und E-Mail ein – wir kümmern uns um alles.', tone: 'sage' },
-  ] as Step[],
+  /** Sektion „Warum eine Website“ */
+  why: {
+    eyebrow: 'Warum eine gute Website',
+    title: 'Bevor jemand zu Ihnen kommt, schaut er ins Internet',
+    intro: 'Auf dem Handy, unterwegs, kurz vor dem Besuch: Öffnungszeiten, Bilder, Speisekarte, Weg. Was man dort findet, entscheidet oft, ob man kommt – oder woanders hingeht.',
+    points: [
+      { eyebrow: 'Der erste Eindruck', title: 'Er entsteht auf dem Handy', text: 'Die meisten sehen Ihr Geschäft zuerst auf einem kleinen Bildschirm. Eine Seite, die dort schnell lädt und gut aussieht, ist wie ein gepflegtes Schaufenster.', tone: 'peach' },
+      { eyebrow: 'Gefunden werden', title: 'Genau dann, wenn gesucht wird', text: '„Café in der Nähe“, „Blumen bestellen“, „Tisch reservieren“ – wer bei Google mit aktueller Website und Profil auftaucht, bekommt den Besuch.', tone: 'lavender' },
+      { eyebrow: 'Vertrauen', title: 'Bevor man Sie kennt', text: 'Echte Fotos, klare Preise, ein persönliches Wort: So merkt man sofort, dass hinter Ihrem Geschäft Menschen stehen – und nicht ein Baukasten.', tone: 'sage' },
+    ] as Point[],
+    promiseLabel: 'Unser Versprechen',
+    promise: [
+      { name: 'Alles aus einer Hand', text: 'Website, Fotos, Texte, Adresse, E-Mail, Google-Profil – wir kümmern uns um alles von A bis Z.' },
+      { name: 'Bezahlung erst bei Zufriedenheit', text: 'Sie sehen den fertigen Entwurf, bevor Sie sich entscheiden. Bezahlt wird erst, wenn Ihnen alles gefällt.' },
+    ] as CarePlan[],
+  },
+
+  steps: {
+    title: 'So funktioniert’s',
+    intro: 'Drei Schritte, ein Ansprechpartner. Sie müssen nichts vorbereiten.',
+    items: [
+      { icon: 'besuch', title: 'Wir kommen vorbei', text: 'Wir besuchen Sie vor Ort, hören zu und zeigen Ihnen einen kostenlosen Entwurf – ganz unverbindlich.', tone: 'peach' },
+      { icon: 'kamera', title: 'Wir fotografieren Ihr Geschäft', text: 'Räume, Produkte, Team: echte Bilder von Ihnen statt austauschbarer Stockfotos.', tone: 'lavender' },
+      { icon: 'online', title: 'Ihre Website geht online', text: 'Wir bauen die Seite, richten Adresse und E-Mail ein und kümmern uns um alles. Bezahlt wird erst, wenn Sie zufrieden sind.', tone: 'sage' },
+    ] as Step[],
+  },
+
+  showcase: {
+    title: 'Aus „im Aufbau“ wird einladend',
+    sliderTitle: 'Ziehen Sie den Regler',
+    sliderText: 'Links eine typische Website von früher, rechts, wie Ihr Geschäft heute online aussehen kann: ruhig, gut lesbar und mit echten Fotos.',
+  },
 
   examples: [
     { title: 'Café', text: 'Frühstückskarte, Öffnungszeiten und Bilder vom Tresen – auf dem Handy sofort gefunden.', photo: 'Milchkaffee auf einem Holztresen', tone: 'peach' },
@@ -91,8 +121,8 @@ export const config = {
       features: [
         'Alles aus Premium',
         'Instagram und TikTok eingerichtet',
-        '3 Monate Beiträge und Anzeigen in den Elbvororten',
-        'Kurzvideos aus Ihrem Laden',
+        '3 Monate Beiträge und Anzeigen in Ihrer Region',
+        'Kurzvideos aus Ihrem Geschäft',
         'QR-Aufsteller für Google-Bewertungen',
         'Gutscheine online verkaufen',
         'Speisekarte oder Flyer als Druckvorlage',
@@ -101,6 +131,7 @@ export const config = {
     },
   ] as Package[],
 
+  pricingIntro: 'Feste Preise, keine versteckten Kosten. Der erste Entwurf ist kostenlos, bezahlt wird erst, wenn Sie zufrieden sind.',
   care: [
     { name: 'Basis', price: '29 €/Monat', text: 'Hosting, Domain, E-Mail, Updates, 30 Min. Änderungen' },
     { name: 'Plus', price: '49 €/Monat', text: 'Alles aus Basis und mehr – [Umfang festlegen]' },
@@ -108,12 +139,19 @@ export const config = {
   priceNote: 'Alle Preise gem. § 19 UStG ohne Umsatzsteuer. Das Anzeigenbudget für Instagram und TikTok kommt beim Paket Rundum-sorglos separat dazu.',
 
   about: {
-    lead: 'Wir sind hier zu Hause und kennen die Läden, in denen wir selbst einkaufen.',
+    title: 'Drei Leute, ein Team',
+    lead: 'Wir sind ein Team aus drei Fachleuten – Webdesign und Softwareentwicklung, Fotografie und Marketing. Sie haben einen Ansprechpartner, und wir kümmern uns um alles von A bis Z.',
     people: [
-      { name: 'Anna', role: 'Kundenkontakt', quote: 'Ich komme gern persönlich vorbei – bei einem Kaffee lässt sich am besten besprechen, was Ihr Laden braucht.', photo: 'Porträt Anna vor einer Ladentür', tone: 'peach' },
-      { name: 'Jan', role: 'Fotograf', quote: 'Ich fotografiere Ihren Laden so, wie Ihre Stammkunden ihn kennen – im schönsten Licht des Tages.', photo: 'Porträt Jan mit Kamera an der Elbe', tone: 'lavender' },
-      { name: 'Davide', role: 'Webentwicklung & Technik', quote: 'Ich baue Websites, die schnell laden, auf jedem Handy funktionieren und Ihnen keine Arbeit machen.', photo: 'Porträt Davide am Arbeitsplatz', tone: 'sky' },
+      { name: 'Webdesign & Software', role: 'Technik', quote: 'Ich baue Websites, die schnell laden, auf jedem Handy funktionieren und Ihnen keine Arbeit machen.', photo: 'Porträt am Arbeitsplatz mit Laptop', tone: 'sky' },
+      { name: 'Fotografie', role: 'Bilder & Video', quote: 'Ich fotografiere Ihr Geschäft so, wie Ihre Stammkunden es kennen – im schönsten Licht des Tages.', photo: 'Porträt mit Kamera vor einer Ladentür', tone: 'lavender' },
+      { name: 'Marketing', role: 'Sichtbarkeit', quote: 'Ich sorge dafür, dass Sie gefunden werden – bei Google, auf Instagram und überall dort, wo Ihre Kunden suchen.', photo: 'Porträt im Gespräch am Tresen', tone: 'peach' },
     ] as Person[],
+  },
+
+  contact: {
+    title: 'Erzählen Sie uns von Ihrem Geschäft',
+    intro: 'Wir melden uns innerhalb von 24 Stunden und vereinbaren einen Termin für Ihren kostenlosen Entwurf.',
+    messagePlaceholder: 'Erzählen Sie uns kurz von Ihrem Geschäft – oder wann wir am besten vorbeikommen.',
   },
 
   /** Rechtstexte: Datum „Stand“ und gelber Entwurfshinweis. Vor dem Livegang ausfüllen, prüfen lassen, Hinweis abschalten. */

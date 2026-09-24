@@ -9,7 +9,7 @@ const { id = 'ueber-uns', lead = config.about.lead, class: className } = Astro.p
 ---
 <section class:list={['lu-section', 'lu-section--lavender', className]} id={id} aria-labelledby="ueber-uns-titel">
   <div class="lu-container lu-section__inner">
-    <SectionHeading eyebrow="Über uns" title="Drei Leute aus der Nachbarschaft" titleId="ueber-uns-titel" />
+    <SectionHeading eyebrow="Über uns" title={config.about.title} titleId="ueber-uns-titel" />
     <p class="lu-about__lead">{lead}</p>
     <ul class="lu-people">
       {config.about.people.map((p) => (

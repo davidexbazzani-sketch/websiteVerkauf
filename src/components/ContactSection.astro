@@ -1,5 +1,6 @@
 ---
 /** Sektion „Kontakt“ (#kontakt): Formular auf weißem Panel, daneben der Info-Kasten. */
+import { config } from '../config';
 import SectionHeading from './SectionHeading.astro';
 import ContactForm from './ContactForm.astro';
 import ContactInfo from './ContactInfo.astro';
@@ -9,7 +10,7 @@ const { id = 'kontakt', class: className } = Astro.props;
 ---
 <section class:list={['lu-section', 'lu-section--sky', className]} id={id} aria-labelledby="kontakt-titel">
   <div class="lu-container lu-section__inner">
-    <SectionHeading eyebrow="Kontakt" title="Erzählen Sie uns von Ihrem Laden" titleId="kontakt-titel" intro="Wir melden uns innerhalb von 24 Stunden und vereinbaren einen Termin für Ihren kostenlosen Entwurf." />
+    <SectionHeading eyebrow="Kontakt" title={config.contact.title} titleId="kontakt-titel" intro={config.contact.intro} />
     <div class="lu-contact">
       <div class="lu-contact__form"><ContactForm /></div>
       <ContactInfo />

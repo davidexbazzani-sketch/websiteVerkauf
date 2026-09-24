@@ -30,7 +30,7 @@ const { privacyHref = '/datenschutz', class: className } = Astro.props;
     <Field label="E-Mail" name="email" type="email" autocomplete="email" inputmode="email" required />
   </div>
   <Field label="Wunschpaket" name="package" type="select" options={packageOptions} placeholderOption="Bitte wählen" />
-  <Field label="Nachricht" name="message" type="textarea" rows={5} placeholder="Erzählen Sie uns kurz von Ihrem Laden – oder wann wir am besten vorbeikommen." />
+  <Field label="Nachricht" name="message" type="textarea" rows={5} placeholder={config.contact.messagePlaceholder} />
 
   <!-- Honeypot: Menschen sehen das Feld nicht, Bots füllen es aus. -->
   <div class="lu-hp" aria-hidden="true">

@@ -1,0 +1,22 @@
+---
+/** Sektion „Warum eine gute Website“ (#warum): drei Argumente als Karten und das Versprechen als Pille. */
+import { config } from '../config';
+import SectionHeading from './SectionHeading.astro';
+import Card from './Card.astro';
+import CareStrip from './CareStrip.astro';
+
+interface Props { id?: string; class?: string }
+const { id = 'warum', class: className } = Astro.props;
+const w = config.why;
+---
+<section class:list={['lu-section', 'lu-section--sky', className]} id={id} aria-labelledby="warum-titel">
+  <div class="lu-container lu-section__inner">
+    <SectionHeading eyebrow={w.eyebrow} title={w.title} titleId="warum-titel" intro={w.intro} />
+    <div class="lu-why__grid">
+      {w.points.map((p) => (
+        <Card tone={p.tone} eyebrow={p.eyebrow} title={p.title} text={p.text} />
+      ))}
+    </div>
+    <CareStrip label={w.promiseLabel} plans={w.promise} />
+  </div>
+</section>

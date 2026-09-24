@@ -11,12 +11,12 @@ const { id = 'beispiele', initial = 50, class: className } = Astro.props;
 ---
 <section class:list={['lu-section', 'lu-section--sky', className]} id={id} aria-labelledby="beispiele-titel">
   <div class="lu-container lu-section__inner">
-    <SectionHeading eyebrow="Vorher / Nachher" title="Aus „im Aufbau“ wird einladend" titleId="beispiele-titel" />
+    <SectionHeading eyebrow="Vorher / Nachher" title={config.showcase.title} titleId="beispiele-titel" />
     <div class="lu-showcase__ba">
       <BeforeAfter initial={initial} caption="Links eine veraltete Website, rechts ein moderner Entwurf." />
       <div class="lu-showcase__ba-text">
-        <h3 class="lu-card__title">Ziehen Sie den Regler</h3>
-        <p>Links eine typische Website von früher, rechts, wie Ihr Laden heute online aussehen kann: ruhig, gut lesbar und mit echten Fotos.</p>
+        <h3 class="lu-card__title">{config.showcase.sliderTitle}</h3>
+        <p>{config.showcase.sliderText}</p>
       </div>
     </div>
     <div class="lu-showcase__grid">

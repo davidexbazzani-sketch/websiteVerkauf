@@ -1,4 +1,4 @@
-# Website für Läden in den Elbvororten
+# Website für Läden, Cafés und Restaurants
 
 Statische Website (Astro) nach dem Designsystem in `design/`. Kein Tracking, keine Cookies, keine externen Anfragen – Schriften liegen in `public/fonts/`.
 

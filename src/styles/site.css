@@ -40,3 +40,11 @@ html { background: var(--surface); }
 /* Burger: Icon wechselt mit dem Menü-Zustand */
 .lu-header--open .lu-header__icon-menu, .lu-header:not(.lu-header--open) .lu-header__icon-close { display: none; }
 
+
+/* Sektion „Warum eine gute Website“: drei Karten nebeneinander, darunter das Versprechen */
+.lu-why__grid { display: grid; gap: var(--space-2); }
+.lu-why__grid .lu-card__body { padding: var(--space-3); }
+@container (min-width: 880px) {
+  .lu-why__grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+  .lu-why__grid .lu-card__body { padding: var(--space-4); }
+}
